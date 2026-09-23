@@ -7,6 +7,7 @@ import '../../core/constants/app_constants.dart';
 import '../../core/utils/validators.dart';
 import '../../models/student_model.dart';
 import '../../providers/auth_provider.dart';
+import '../../providers/student_provider.dart';
 import '../../services/student_service.dart';
 import '../../services/storage_service.dart';
 import '../../widgets/confirmation_dialog.dart';
@@ -125,6 +126,9 @@ class _StudentEditScreenState extends ConsumerState<StudentEditScreen> {
           widget.student.id, changes, user.name);
 
       if (error != null) throw Exception(error);
+
+      ref.invalidate(allStudentsStreamProvider);
+      ref.invalidate(myStudentsStreamProvider);
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

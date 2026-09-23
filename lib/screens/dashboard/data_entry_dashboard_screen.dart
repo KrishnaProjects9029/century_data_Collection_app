@@ -26,8 +26,16 @@ class DataEntryDashboardScreen extends ConsumerWidget {
           children: [
             const ConnectivityBanner(),
             Expanded(
-              child: CustomScrollView(
-                slivers: [
+              child: RefreshIndicator(
+                color: AppColors.primary,
+                onRefresh: () async {
+                  ref.invalidate(myCountProvider);
+                  ref.invalidate(todayCountProvider);
+                  ref.invalidate(myStudentsStreamProvider);
+                },
+                child: CustomScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  slivers: [
                   SliverAppBar(
                     expandedHeight: 120,
                     pinned: true,
@@ -282,8 +290,9 @@ class DataEntryDashboardScreen extends ConsumerWidget {
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.push(

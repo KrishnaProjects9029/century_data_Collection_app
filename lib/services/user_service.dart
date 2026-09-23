@@ -9,13 +9,40 @@ class UserService {
   // LIST
   // ──────────────────────────────────────────────
 
-  /// Stream of all users from profiles table
-  Stream<List<UserModel>> allUsersStream() {
-    return _client
-        .from('profiles')
-        .stream(primaryKey: ['id'])
-        .order('name')
-        .map((list) => list.map(UserModel.fromMap).toList());
+  /// Direct REST query for all users from profiles table
+  Future<List<UserModel>> getAllUsers() async {
+    try {
+      final data = await _client.from('profiles').select().order('name');
+      return (data as List).map((row) => UserModel.fromMap(row)).toList();
+    } catch (_) {
+      return [];
+    }
+  }
+
+  /// Stream of all users from profiles table with REST fallback
+  Stream<List<UserModel>> allUsersStream() async* {
+    List<UserModel> latest = [];
+    try {
+      latest = await getAllUsers();
+      yield latest;
+    } catch (_) {}
+
+    try {
+      await for (final list in _client
+          .from('profiles')
+          .stream(primaryKey: ['id'])
+          .order('name')) {
+        latest = list.map(UserModel.fromMap).toList();
+        yield latest;
+      }
+    } catch (e) {
+      if (latest.isEmpty) {
+        try {
+          latest = await getAllUsers();
+          yield latest;
+        } catch (_) {}
+      }
+    }
   }
 
   // ──────────────────────────────────────────────

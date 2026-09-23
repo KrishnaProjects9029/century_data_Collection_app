@@ -133,30 +133,102 @@ class _StudentListScreenState extends ConsumerState<StudentListScreen> {
 
   Widget _buildStreamList(
       AsyncValue<List<StudentModel>> stream, bool isAdmin) {
-    return stream.when(
-      data: (students) {
-        if (students.isEmpty) {
-          return _emptyState(
-            icon: Icons.people_outline,
-            message: 'No student records yet.',
-            sub: 'Tap + to add the first student.',
+    Future<void> refresh() async {
+      if (widget.myOnly) {
+        ref.invalidate(myStudentsStreamProvider);
+      } else {
+        ref.invalidate(allStudentsStreamProvider);
+      }
+    }
+
+    return RefreshIndicator(
+      color: AppColors.primary,
+      onRefresh: refresh,
+      child: stream.when(
+        data: (students) {
+          if (students.isEmpty) {
+            return ListView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+                _emptyState(
+                  icon: Icons.people_outline,
+                  message: 'No student records yet.',
+                  sub: 'Tap + to add the first student.',
+                ),
+              ],
+            );
+          }
+          return ListView.builder(
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: const EdgeInsets.only(top: 8, bottom: 80),
+            itemCount: students.length,
+            itemBuilder: (_, i) => StudentListTile(
+              student: students[i],
+              onTap: () => _openDetail(students[i]),
+            ),
           );
-        }
-        return ListView.builder(
-          padding: const EdgeInsets.only(top: 8, bottom: 80),
-          itemCount: students.length,
-          itemBuilder: (_, i) => StudentListTile(
-            student: students[i],
-            onTap: () => _openDetail(students[i]),
-          ),
-        );
-      },
-      loading: () => const Center(
-          child: CircularProgressIndicator(color: AppColors.primary)),
-      error: (e, _) => Center(
-        child: Text('Error loading records.\n$e',
-            textAlign: TextAlign.center,
-            style: const TextStyle(color: AppColors.error)),
+        },
+        loading: () => const Center(
+            child: CircularProgressIndicator(color: AppColors.primary)),
+        error: (e, _) => ListView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: const EdgeInsets.all(24),
+          children: [
+            SizedBox(height: MediaQuery.of(context).size.height * 0.15),
+            Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: AppColors.error.withOpacity(0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.cloud_off_rounded,
+                        color: AppColors.error, size: 40),
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Unable to Load Records',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    e.toString().contains('RealtimeSubscribeException')
+                        ? 'Realtime synchronization issue. Pull down to refresh via central database.'
+                        : 'Could not fetch records. Please check your internet connection.',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12),
+                    ),
+                    icon: const Icon(Icons.refresh_rounded, size: 18),
+                    label: const Text('Try Again'),
+                    onPressed: refresh,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -25,33 +25,104 @@ class StudentService {
   }
 
   // ──────────────────────────────────────────────
-  // READ — STREAMS
+  // READ — DIRECT REST QUERIES
+  // ──────────────────────────────────────────────
+
+  /// Direct REST query for all active student records
+  Future<List<StudentModel>> getAllStudents() async {
+    try {
+      final data = await _students
+          .select()
+          .eq('is_deleted', false)
+          .order('serial_number', ascending: false);
+      return (data as List).map((row) => StudentModel.fromMap(row)).toList();
+    } catch (_) {
+      return [];
+    }
+  }
+
+  /// Direct REST query for records entered by a specific maker
+  Future<List<StudentModel>> getStudentsByMaker(String makerUserId) async {
+    if (makerUserId.isEmpty) return [];
+    try {
+      final data = await _students
+          .select()
+          .eq('is_deleted', false)
+          .eq('maker_user_id', makerUserId)
+          .order('serial_number', ascending: false);
+      return (data as List).map((row) => StudentModel.fromMap(row)).toList();
+    } catch (_) {
+      return [];
+    }
+  }
+
+  // ──────────────────────────────────────────────
+  // READ — STREAMS (WITH REST FALLBACK)
   // ──────────────────────────────────────────────
 
   /// Stream of all active student records (Admin)
-  Stream<List<StudentModel>> allStudentsStream() {
-    return _client
-        .from('students')
-        .stream(primaryKey: ['id'])
-        .order('serial_number', ascending: false)
-        .map((list) => list
+  Stream<List<StudentModel>> allStudentsStream() async* {
+    List<StudentModel> latest = [];
+    try {
+      latest = await getAllStudents();
+      yield latest;
+    } catch (_) {}
+
+    try {
+      await for (final list in _client
+          .from('students')
+          .stream(primaryKey: ['id'])
+          .order('serial_number', ascending: false)) {
+        latest = list
             .where((m) => m['is_deleted'] != true)
             .map(StudentModel.fromMap)
-            .toList());
+            .toList();
+        yield latest;
+      }
+    } catch (e) {
+      // Realtime may not be enabled on the database table; retain REST data
+      if (latest.isEmpty) {
+        try {
+          latest = await getAllStudents();
+          yield latest;
+        } catch (_) {}
+      }
+    }
   }
 
   /// Stream of records entered by a specific maker (Data Entry User)
-  Stream<List<StudentModel>> myStudentsStream(String makerUserId) {
-    if (makerUserId.isEmpty) return Stream.value([]);
-    return _client
-        .from('students')
-        .stream(primaryKey: ['id'])
-        .eq('maker_user_id', makerUserId)
-        .order('serial_number', ascending: false)
-        .map((list) => list
-            .where((m) => m['is_deleted'] != true)
+  Stream<List<StudentModel>> myStudentsStream(String makerUserId) async* {
+    if (makerUserId.isEmpty) {
+      yield [];
+      return;
+    }
+    List<StudentModel> latest = [];
+    try {
+      latest = await getStudentsByMaker(makerUserId);
+      yield latest;
+    } catch (_) {}
+
+    try {
+      await for (final list in _client
+          .from('students')
+          .stream(primaryKey: ['id'])
+          .order('serial_number', ascending: false)) {
+        latest = list
+            .where((m) =>
+                m['is_deleted'] != true && m['maker_user_id'] == makerUserId)
             .map(StudentModel.fromMap)
-            .toList());
+            .toList();
+        yield latest;
+      }
+    } catch (e) {
+      // Realtime may not be enabled on the database table; retain REST data
+      if (latest.isEmpty) {
+        try {
+          latest = await getStudentsByMaker(makerUserId);
+          yield latest;
+        } catch (_) {}
+      }
+    }
   }
 
   // ──────────────────────────────────────────────

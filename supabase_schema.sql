@@ -198,7 +198,13 @@ create trigger on_auth_user_created
   for each row execute function public.handle_new_user();
 
 -- ============================================================
--- 6. BOOTSTRAP INSTRUCTIONS FOR FIRST ADMIN
+-- 6. ENABLE REALTIME ON STUDENTS AND PROFILES
+-- ============================================================
+alter publication supabase_realtime add table public.students;
+alter publication supabase_realtime add table public.profiles;
+
+-- ============================================================
+-- 7. BOOTSTRAP INSTRUCTIONS FOR FIRST ADMIN
 -- After creating your admin user in Authentication -> Users, run:
 -- update public.profiles set role = 'ADMIN' where email = 'your-admin-email@example.com';
 -- ============================================================

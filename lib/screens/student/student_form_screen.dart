@@ -11,6 +11,7 @@ import '../../models/student_model.dart';
 import '../../models/pending_submission_model.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/connectivity_provider.dart';
+import '../../providers/student_provider.dart';
 import '../../services/student_service.dart';
 import '../../services/offline_queue_service.dart';
 import '../../services/storage_service.dart';
@@ -206,6 +207,12 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
 
       final (_, error) = await fs.addStudent(student);
       if (error != null) throw Exception(error);
+
+      ref.invalidate(allStudentsStreamProvider);
+      ref.invalidate(myStudentsStreamProvider);
+      ref.invalidate(totalCountProvider);
+      ref.invalidate(todayCountProvider);
+      ref.invalidate(myCountProvider);
 
       if (mounted) _showSuccess();
     } catch (e) {

@@ -103,8 +103,18 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
           children: [
             const ConnectivityBanner(),
             Expanded(
-              child: CustomScrollView(
-                slivers: [
+              child: RefreshIndicator(
+                color: AppColors.primary,
+                onRefresh: () async {
+                  ref.invalidate(totalCountProvider);
+                  ref.invalidate(todayCountProvider);
+                  ref.invalidate(myCountProvider);
+                  ref.invalidate(allStudentsStreamProvider);
+                  ref.invalidate(allUsersStreamProvider);
+                },
+                child: CustomScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  slivers: [
                   // App Bar
                   SliverAppBar(
                     expandedHeight: 125,
@@ -639,8 +649,9 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => Navigator.push(

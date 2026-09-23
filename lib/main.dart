@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'core/config/supabase_config.dart';
 import 'core/theme/app_theme.dart';
@@ -15,6 +16,10 @@ void main() async {
   FlutterError.onError = (details) {
     FlutterError.presentError(details);
   };
+
+  try {
+    await initializeDateFormatting();
+  } catch (_) {}
 
   try {
     await SystemChrome.setPreferredOrientations([

@@ -265,6 +265,12 @@ class StudentDetailScreen extends ConsumerWidget {
           SnackBar(content: Text(error), backgroundColor: AppColors.error),
         );
       } else {
+        ref.invalidate(allStudentsStreamProvider);
+        ref.invalidate(myStudentsStreamProvider);
+        ref.invalidate(totalCountProvider);
+        ref.invalidate(todayCountProvider);
+        ref.invalidate(myCountProvider);
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Record deleted successfully.'),
