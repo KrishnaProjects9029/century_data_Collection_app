@@ -1,0 +1,77 @@
+name: krishna_century_data_app
+description: Student Registration Management App for Krishna Century
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.1.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Supabase Backend (Auth, Database, Storage, Realtime)
+  supabase_flutter: ^2.6.0
+
+  # State Management
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.5
+
+  # Image Handling
+  image_picker: ^1.0.7
+  cached_network_image: ^3.3.1
+  flutter_image_compress: ^2.2.0
+
+  # Excel Export
+  excel: ^4.0.3
+
+  # File Sharing
+  share_plus: ^7.2.2
+  path_provider: ^2.1.2
+
+  # Connectivity
+  connectivity_plus: ^5.0.2
+  internet_connection_checker: ^1.0.0+1
+
+  # Local Storage (offline queue)
+  shared_preferences: ^2.2.3
+
+  # UI Extras
+  intl: ^0.19.0
+  flutter_spinkit: ^5.2.1
+  fluttertoast: ^8.2.5
+  lottie: ^3.1.0
+
+  # Permissions
+  permission_handler: ^11.3.1
+
+  # UUID for offline queue
+  uuid: ^4.3.3
+
+  # Date Picker
+  syncfusion_flutter_datepicker: ^25.1.38
+
+  cupertino_icons: ^1.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  build_runner: ^2.4.9
+  riverpod_generator: ^2.3.11
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/lottie/
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 700
