@@ -20,9 +20,14 @@ class ConnectivityManager {
 
   void _startListening() {
     _subscription = _connectivity.onConnectivityChanged.listen(
-      (results) async {
-        // connectivity_plus returns a list in newer versions
-        final hasNetwork = results.any((r) => r != ConnectivityResult.none);
+      (dynamic res) async {
+        bool hasNetwork = false;
+        if (res is List) {
+          hasNetwork = res.any((r) => r != ConnectivityResult.none);
+        } else {
+          hasNetwork = res != ConnectivityResult.none;
+        }
+
         if (hasNetwork) {
           // Double-check with actual internet ping
           final hasInternet = await _checker.hasConnection;
@@ -41,8 +46,12 @@ class ConnectivityManager {
 
   /// One-shot check.
   Future<bool> get isConnected async {
-    final results = await _connectivity.checkConnectivity();
-    if (results.contains(ConnectivityResult.none) && results.length == 1) {
+    final dynamic res = await _connectivity.checkConnectivity();
+    if (res is List) {
+      if (res.every((r) => r == ConnectivityResult.none)) {
+        return false;
+      }
+    } else if (res == ConnectivityResult.none) {
       return false;
     }
     return _checker.hasConnection;

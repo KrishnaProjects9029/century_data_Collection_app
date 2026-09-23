@@ -33,9 +33,11 @@ class StudentService {
     return _client
         .from('students')
         .stream(primaryKey: ['id'])
-        .eq('is_deleted', false)
         .order('serial_number', ascending: false)
-        .map((list) => list.map(StudentModel.fromMap).toList());
+        .map((list) => list
+            .where((m) => m['is_deleted'] != true)
+            .map(StudentModel.fromMap)
+            .toList());
   }
 
   /// Stream of records entered by a specific maker (Data Entry User)
@@ -44,10 +46,12 @@ class StudentService {
     return _client
         .from('students')
         .stream(primaryKey: ['id'])
-        .eq('is_deleted', false)
         .eq('maker_user_id', makerUserId)
         .order('serial_number', ascending: false)
-        .map((list) => list.map(StudentModel.fromMap).toList());
+        .map((list) => list
+            .where((m) => m['is_deleted'] != true)
+            .map(StudentModel.fromMap)
+            .toList());
   }
 
   // ──────────────────────────────────────────────

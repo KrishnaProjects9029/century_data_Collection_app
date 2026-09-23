@@ -13,8 +13,10 @@ class StorageService {
   Future<(String?, String?)> uploadStudentPhoto({
     required File imageFile,
     required String makerUid,
+    Function(double)? onProgress,
   }) async {
     try {
+      onProgress?.call(0.1);
       // Validate size before compression (5 MB limit)
       final size = await imageFile.length();
       if (size > AppConstants.maxPhotoSizeBytes) {
@@ -22,6 +24,7 @@ class StorageService {
       }
 
       // Compress image
+      onProgress?.call(0.3);
       final compressed = await _compressImage(imageFile);
       final uploadFile = compressed ?? imageFile;
 
@@ -29,6 +32,7 @@ class StorageService {
       final timestamp = DateTime.now().millisecondsSinceEpoch;
       final path = '$makerUid/${timestamp}_photo.jpg';
 
+      onProgress?.call(0.6);
       await _client.storage
           .from(SupabaseConfig.studentPhotosBucket)
           .upload(
@@ -40,11 +44,13 @@ class StorageService {
             ),
           );
 
+      onProgress?.call(0.9);
       // Get public URL
       final publicUrl = _client.storage
           .from(SupabaseConfig.studentPhotosBucket)
           .getPublicUrl(path);
 
+      onProgress?.call(1.0);
       return (publicUrl, null);
     } on StorageException catch (e) {
       return (null, 'Photo upload failed: ${e.message}');
