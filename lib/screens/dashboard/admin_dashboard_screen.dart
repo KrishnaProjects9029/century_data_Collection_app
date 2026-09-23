@@ -115,182 +115,211 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                 child: CustomScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   slivers: [
-                  // App Bar
+                  // Compact Modern SaaS Header
                   SliverAppBar(
-                    expandedHeight: 125,
+                    expandedHeight: 88,
+                    toolbarHeight: 88,
                     pinned: true,
-                    backgroundColor: const Color(0xFF0F172A),
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: Container(
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xFF0F172A), Color(0xFF1E3A8A)],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
+                    elevation: 0,
+                    backgroundColor: Colors.white,
+                    surfaceTintColor: Colors.transparent,
+                    automaticallyImplyLeading: false,
+                    flexibleSpace: Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        border: Border(
+                          bottom: BorderSide(
+                            color: AppColors.border,
+                            width: 1,
                           ),
-                        ),
-                        padding: const EdgeInsets.fromLTRB(20, 48, 20, 16),
-                        child: userAsync.when(
-                          data: (user) => Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              CircleAvatar(
-                                radius: 22,
-                                backgroundColor: Colors.white.withOpacity(0.18),
-                                child: Text(
-                                  (user?.name.isNotEmpty == true ? user!.name[0] : 'A')
-                                      .toUpperCase(),
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Flexible(
-                                          child: Text(
-                                            user?.name ?? 'Administrator',
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 8),
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 8, vertical: 2),
-                                          decoration: BoxDecoration(
-                                            color: const Color(0xFFF59E0B).withOpacity(0.2),
-                                            borderRadius: BorderRadius.circular(12),
-                                            border: Border.all(
-                                                color: const Color(0xFFFBBF24),
-                                                width: 1),
-                                          ),
-                                          child: const Text(
-                                            'ADMIN',
-                                            style: TextStyle(
-                                              color: Color(0xFFFBBF24),
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w800,
-                                              letterSpacing: 0.8,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 3),
-                                    const Text(
-                                      'Century Data App • Admin Portal',
-                                      style: TextStyle(
-                                        color: Colors.white70,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          loading: () => const SizedBox(),
-                          error: (_, __) => const SizedBox(),
                         ),
                       ),
-                    ),
-                    actions: [
-                      Container(
-                        margin: const EdgeInsets.only(right: 12),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.12),
-                          shape: BoxShape.circle,
-                        ),
-                        child: IconButton(
-                          icon: const Icon(Icons.logout_rounded,
-                              color: Colors.white, size: 20),
-                          tooltip: 'Logout',
-                          onPressed: () => _logout(context, ref),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  // Quick Excel Export Highlight Card
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 14),
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [Color(0xFF065F46), Color(0xFF047857)],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          borderRadius: BorderRadius.circular(18),
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color(0xFF047857).withOpacity(0.25),
-                              blurRadius: 12,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                        ),
+                      padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                      child: SafeArea(
+                        bottom: false,
                         child: Row(
                           children: [
-                            Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.16),
-                                borderRadius: BorderRadius.circular(14),
+                            // Profile Avatar
+                            CircleAvatar(
+                              radius: 20,
+                              backgroundColor:
+                                  const Color(0xFF2563EB).withOpacity(0.1),
+                              child: Text(
+                                (userAsync.valueOrNull?.name.isNotEmpty == true
+                                        ? userAsync.valueOrNull!.name[0]
+                                        : 'K')
+                                    .toUpperCase(),
+                                style: const TextStyle(
+                                  color: Color(0xFF2563EB),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
-                              child: const Icon(Icons.table_view_rounded,
-                                  color: Colors.white, size: 26),
                             ),
-                            const SizedBox(width: 14),
+                            const SizedBox(width: 12),
+                            // User Info & Badges
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text(
-                                    'Export All Data to Excel',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 15,
-                                    ),
+                                  Row(
+                                    children: [
+                                      Flexible(
+                                        child: Text(
+                                          userAsync.valueOrNull?.name ?? 'Krishna',
+                                          style: const TextStyle(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w700,
+                                            color: AppColors.textPrimary,
+                                            letterSpacing: -0.2,
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 7, vertical: 2),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFF2563EB)
+                                              .withOpacity(0.08),
+                                          borderRadius:
+                                              BorderRadius.circular(6),
+                                          border: Border.all(
+                                            color: const Color(0xFF2563EB)
+                                                .withOpacity(0.25),
+                                            width: 1,
+                                          ),
+                                        ),
+                                        child: const Text(
+                                          'ADMIN',
+                                          style: TextStyle(
+                                            color: Color(0xFF2563EB),
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w800,
+                                            letterSpacing: 0.5,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   const SizedBox(height: 2),
-                                  Text(
-                                    'Download 17-column dataset (${totalAsync.valueOrNull ?? 0} records)',
+                                  const Text(
+                                    'Central Database • All users data & Excel export',
                                     style: TextStyle(
-                                      color: Colors.white.withOpacity(0.85),
-                                      fontSize: 12,
+                                      color: AppColors.textSecondary,
+                                      fontSize: 11.5,
+                                      fontWeight: FontWeight.w400,
                                     ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ],
                               ),
                             ),
-                            const SizedBox(width: 10),
-                            ElevatedButton.icon(
+                            const SizedBox(width: 8),
+                            // Logout Button
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey.withOpacity(0.08),
+                                shape: BoxShape.circle,
+                              ),
+                              child: IconButton(
+                                icon: const Icon(
+                                  Icons.logout_rounded,
+                                  color: AppColors.textSecondary,
+                                  size: 20,
+                                ),
+                                tooltip: 'Logout',
+                                onPressed: () => _logout(context, ref),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  // Premium "Export Data" Card
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                      child: Container(
+                        padding: const EdgeInsets.all(18),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(18),
+                          border: Border.all(
+                            color: const Color(0xFF059669).withOpacity(0.22),
+                            width: 1.2,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFF059669).withOpacity(0.05),
+                              blurRadius: 10,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: LayoutBuilder(
+                          builder: (context, constraints) {
+                            final isNarrow = constraints.maxWidth < 360;
+                            final content = Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF059669)
+                                        .withOpacity(0.12),
+                                    borderRadius: BorderRadius.circular(14),
+                                  ),
+                                  child: const Icon(
+                                    Icons.table_view_rounded,
+                                    color: Color(0xFF059669),
+                                    size: 26,
+                                  ),
+                                ),
+                                const SizedBox(width: 14),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Text(
+                                        'Export All Data',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColors.textPrimary,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 3),
+                                      Text(
+                                        'Export student records submitted by all operators (${totalAsync.valueOrNull ?? 0} records)',
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          color: AppColors.textSecondary,
+                                          height: 1.2,
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            );
+
+                            final button = ElevatedButton.icon(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                foregroundColor: const Color(0xFF065F46),
+                                backgroundColor: const Color(0xFF059669),
+                                foregroundColor: Colors.white,
                                 elevation: 0,
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 8),
+                                    horizontal: 16, vertical: 12),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
@@ -298,22 +327,45 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                               onPressed: _isExporting ? null : _quickExportAll,
                               icon: _isExporting
                                   ? const SizedBox(
-                                      width: 14,
-                                      height: 14,
+                                      width: 16,
+                                      height: 16,
                                       child: CircularProgressIndicator(
                                         strokeWidth: 2,
-                                        color: Color(0xFF065F46),
+                                        color: Colors.white,
                                       ),
                                     )
                                   : const Icon(Icons.file_download_rounded,
-                                      size: 16),
+                                      size: 18),
                               label: const Text(
                                 'EXPORT',
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w800, fontSize: 12),
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 13,
+                                  letterSpacing: 0.5,
+                                ),
                               ),
-                            ),
-                          ],
+                            );
+
+                            if (isNarrow) {
+                              return Column(
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.stretch,
+                                children: [
+                                  content,
+                                  const SizedBox(height: 14),
+                                  button,
+                                ],
+                              );
+                            }
+
+                            return Row(
+                              children: [
+                                Expanded(child: content),
+                                const SizedBox(width: 12),
+                                button,
+                              ],
+                            );
+                          },
                         ),
                       ),
                     ),
@@ -322,139 +374,48 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                   // Stats Grid
                   SliverPadding(
                     padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
-                    sliver: SliverGrid(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 12,
-                        childAspectRatio: 1.15,
-                      ),
-                      delegate: SliverChildListDelegate([
-                        StatsCard(
-                          title: 'Total Students',
-                          value: totalAsync.valueOrNull?.toString() ?? '0',
-                          icon: Icons.groups_rounded,
-                          color: AppColors.statBlue,
-                          onTap: () => _goToList(context, false),
-                        ),
-                        StatsCard(
-                          title: "Today's Entries",
-                          value: todayAsync.valueOrNull?.toString() ?? '0',
-                          icon: Icons.event_available_rounded,
-                          color: AppColors.statGreen,
-                        ),
-                        StatsCard(
-                          title: 'Active Operators',
-                          value: usersAsync.when(
-                            data: (users) => users
-                                .where((u) => u.isActive && !u.isAdmin)
-                                .length
-                                .toString(),
-                            loading: () => '...',
-                            error: (_, __) => '0',
+                    sliver: SliverLayoutBuilder(
+                      builder: (context, constraints) {
+                        final isWide = constraints.crossAxisExtent > 640;
+                        final crossAxisCount = isWide ? 4 : 2;
+                        return SliverGrid(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: crossAxisCount,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 12,
+                            childAspectRatio: isWide ? 1.35 : 1.18,
                           ),
-                          icon: Icons.badge_outlined,
-                          color: AppColors.statPurple,
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const UserManagementScreen()),
-                          ),
-                        ),
-                        StatsCard(
-                          title: 'My Submissions',
-                          value: myAsync.valueOrNull?.toString() ?? '0',
-                          icon: Icons.person_pin_circle_outlined,
-                          color: AppColors.statOrange,
-                          onTap: () => _goToList(context, true),
-                        ),
-                      ]),
-                    ),
-                  ),
-
-                  // Quick Action Tiles
-                  SliverPadding(
-                    padding: const EdgeInsets.fromLTRB(16, 18, 16, 0),
-                    sliver: SliverList(
-                      delegate: SliverChildListDelegate([
-                        Row(
-                          children: [
-                            Container(
-                              width: 4,
-                              height: 16,
-                              decoration: BoxDecoration(
-                                color: AppColors.primary,
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            const Text(
-                              'Quick Actions',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.textPrimary,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 12),
-                        GridView.count(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          childAspectRatio: 1.05,
-                          children: [
-                            _ActionCard(
-                              icon: Icons.person_add_rounded,
-                              label: 'Add Student',
-                              color: AppColors.primary,
-                              onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => const StudentFormScreen()),
-                              ),
-                            ),
-                            _ActionCard(
-                              icon: Icons.format_list_bulleted_rounded,
-                              label: 'All Students',
+                          delegate: SliverChildListDelegate([
+                            StatsCard(
+                              title: 'Total Students',
+                              value: totalAsync.valueOrNull?.toString() ?? '0',
+                              subtitle: 'All-time registered',
+                              icon: Icons.groups_rounded,
                               color: AppColors.statBlue,
                               onTap: () => _goToList(context, false),
                             ),
-                            _ActionCard(
-                              icon: Icons.search_rounded,
-                              label: 'Search',
-                              color: AppColors.statGreen,
-                              onTap: () =>
-                                  _goToList(context, false, openSearch: true),
+                            StatsCard(
+                              title: "Today's Entries",
+                              value: todayAsync.valueOrNull?.toString() ?? '0',
+                              subtitle: 'Recorded today',
+                              icon: Icons.event_available_rounded,
+                              color: const Color(0xFF059669),
+                              onTap: () => _goToList(context, false),
                             ),
-                            _ActionCard(
-                              icon: Icons.filter_alt_rounded,
-                              label: 'Filter Data',
-                              color: AppColors.statOrange,
-                              onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => const FilterScreen()),
+                            StatsCard(
+                              title: 'Active Operators',
+                              value: usersAsync.when(
+                                data: (users) => users
+                                    .where((u) => u.isActive && !u.isAdmin)
+                                    .length
+                                    .toString(),
+                                loading: () => '...',
+                                error: (_, __) => '0',
                               ),
-                            ),
-                            _ActionCard(
-                              icon: Icons.receipt_long_rounded,
-                              label: 'Excel Options',
-                              color: AppColors.statPurple,
-                              onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => const ExportScreen()),
-                              ),
-                            ),
-                            _ActionCard(
-                              icon: Icons.manage_accounts_rounded,
-                              label: 'Manage Users',
-                              color: AppColors.adminBadge,
+                              subtitle: 'Team members',
+                              icon: Icons.badge_outlined,
+                              color: const Color(0xFFD97706),
                               onTap: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -462,27 +423,162 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                                         const UserManagementScreen()),
                               ),
                             ),
-                          ],
-                        ),
-                      ]),
+                            StatsCard(
+                              title: 'Export Options',
+                              value: 'Open →',
+                              subtitle: 'Custom Excel sheets',
+                              icon: Icons.table_view_rounded,
+                              color: const Color(0xFF7C3AED),
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => const ExportScreen()),
+                              ),
+                            ),
+                          ]),
+                        );
+                      },
                     ),
                   ),
 
-                  // Data Inserted by All Users (Live Stream) Header & Filter
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 20, 16, 8),
+                  // Quick Action Tiles
+                  SliverPadding(
+                    padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+                    sliver: SliverToBoxAdapter(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
                               Container(
-                                width: 8,
-                                height: 8,
-                                decoration: const BoxDecoration(
-                                  color: Color(0xFF10B981),
+                                width: 4,
+                                height: 16,
+                                decoration: BoxDecoration(
+                                  color: AppColors.primary,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              const Text(
+                                'Quick Actions',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.textPrimary,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          LayoutBuilder(
+                            builder: (context, constraints) {
+                              final isDesktop = constraints.maxWidth > 800;
+                              final isTablet = constraints.maxWidth > 500;
+                              final cols = isDesktop ? 6 : (isTablet ? 3 : 2);
+                              final aspectRatio =
+                                  isDesktop ? 1.6 : (isTablet ? 1.9 : 1.85);
+
+                              return GridView.count(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                crossAxisCount: cols,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                childAspectRatio: aspectRatio,
+                                children: [
+                                  _ActionCard(
+                                    icon: Icons.person_add_rounded,
+                                    label: 'Add Student',
+                                    subtitle: 'New entry form',
+                                    color: AppColors.primary,
+                                    onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) =>
+                                              const StudentFormScreen()),
+                                    ),
+                                  ),
+                                  _ActionCard(
+                                    icon: Icons.format_list_bulleted_rounded,
+                                    label: 'All Students',
+                                    subtitle: 'View database',
+                                    color: AppColors.statBlue,
+                                    onTap: () => _goToList(context, false),
+                                  ),
+                                  _ActionCard(
+                                    icon: Icons.search_rounded,
+                                    label: 'Search',
+                                    subtitle: 'Instant lookup',
+                                    color: const Color(0xFF059669),
+                                    onTap: () => _goToList(context, false,
+                                        openSearch: true),
+                                  ),
+                                  _ActionCard(
+                                    icon: Icons.filter_alt_rounded,
+                                    label: 'Filter Data',
+                                    subtitle: 'Date & school',
+                                    color: const Color(0xFFD97706),
+                                    onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => const FilterScreen()),
+                                    ),
+                                  ),
+                                  _ActionCard(
+                                    icon: Icons.receipt_long_rounded,
+                                    label: 'Excel Options',
+                                    subtitle: 'Custom downloads',
+                                    color: const Color(0xFF7C3AED),
+                                    onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => const ExportScreen()),
+                                    ),
+                                  ),
+                                  _ActionCard(
+                                    icon: Icons.manage_accounts_rounded,
+                                    label: 'Manage Users',
+                                    subtitle: 'Team accounts',
+                                    color: const Color(0xFFDC2626),
+                                    onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) =>
+                                              const UserManagementScreen()),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  // Data Inserted by All Users (Live Stream) Header & Filter
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 22, 16, 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                width: 10,
+                                height: 10,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF10B981),
                                   shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: const Color(0xFF10B981)
+                                          .withOpacity(0.45),
+                                      blurRadius: 6,
+                                      spreadRadius: 2,
+                                    ),
+                                  ],
                                 ),
                               ),
                               const SizedBox(width: 8),
@@ -495,12 +591,23 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                                 ),
                               ),
                               const Spacer(),
-                              TextButton(
-                                onPressed: () => _goToList(context, false),
-                                child: const Text(
-                                  'View All →',
-                                  style: TextStyle(fontWeight: FontWeight.w600),
+                              TextButton.icon(
+                                style: TextButton.styleFrom(
+                                  foregroundColor: AppColors.primary,
+                                  visualDensity: VisualDensity.compact,
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
                                 ),
+                                onPressed: () => _goToList(context, false),
+                                icon: const Text(
+                                  'View All',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                                label: const Icon(Icons.arrow_forward_rounded,
+                                    size: 15),
                               ),
                             ],
                           ),
@@ -513,32 +620,48 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                                 return const SizedBox.shrink();
                               }
                               return Container(
-                                margin: const EdgeInsets.only(bottom: 8),
+                                margin:
+                                    const EdgeInsets.only(top: 8, bottom: 4),
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 2),
+                                    horizontal: 14, vertical: 2),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
+                                  borderRadius: BorderRadius.circular(12),
                                   border: Border.all(color: AppColors.border),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.02),
+                                      blurRadius: 4,
+                                      offset: const Offset(0, 1),
+                                    ),
+                                  ],
                                 ),
                                 child: DropdownButtonHideUnderline(
                                   child: DropdownButton<String?>(
                                     value: _selectedMakerId,
                                     isExpanded: true,
+                                    icon: const Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      color: AppColors.textSecondary,
+                                    ),
                                     hint: const Text(
-                                      'Filter by User: All Users',
+                                      'Filter by Operator: All Users',
                                       style: TextStyle(
-                                          fontSize: 13,
-                                          color: AppColors.textPrimary),
+                                        fontSize: 13,
+                                        color: AppColors.textPrimary,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                     items: [
                                       const DropdownMenuItem(
                                         value: null,
                                         child: Text(
-                                          '👤 All Users (Showing everything)',
+                                          '👥 All Operators (All submissions)',
                                           style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 13),
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 13,
+                                            color: AppColors.textPrimary,
+                                          ),
                                         ),
                                       ),
                                       ...activeUsers.map(
@@ -546,7 +669,8 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                                           value: u.id,
                                           child: Text(
                                             '👤 ${u.name} (${u.role})',
-                                            style: const TextStyle(fontSize: 13),
+                                            style:
+                                                const TextStyle(fontSize: 13),
                                           ),
                                         ),
                                       ),
@@ -579,18 +703,38 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                       if (displayed.isEmpty) {
                         return SliverToBoxAdapter(
                           child: Padding(
-                            padding: const EdgeInsets.all(32),
+                            padding: const EdgeInsets.all(40),
                             child: Center(
                               child: Column(
                                 children: [
-                                  Icon(Icons.inbox_outlined,
-                                      size: 48, color: Colors.grey.shade400),
-                                  const SizedBox(height: 8),
+                                  Container(
+                                    padding: const EdgeInsets.all(16),
+                                    decoration: BoxDecoration(
+                                      color:
+                                          AppColors.primary.withOpacity(0.06),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Icon(Icons.inbox_outlined,
+                                        size: 40,
+                                        color: AppColors.primary
+                                            .withOpacity(0.6)),
+                                  ),
+                                  const SizedBox(height: 12),
                                   const Text(
-                                    'No records found.',
+                                    'No records found',
                                     style: TextStyle(
-                                        color: AppColors.textSecondary,
-                                        fontSize: 14),
+                                      color: AppColors.textPrimary,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  const Text(
+                                    'New student entries will show up here live.',
+                                    style: TextStyle(
+                                      color: AppColors.textSecondary,
+                                      fontSize: 12.5,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -623,7 +767,7 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                     },
                     loading: () => const SliverToBoxAdapter(
                       child: Padding(
-                        padding: EdgeInsets.all(32),
+                        padding: EdgeInsets.all(36),
                         child: Center(
                           child: CircularProgressIndicator(
                               color: AppColors.primary),
@@ -643,8 +787,9 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                     ),
                   ),
 
+                  // Bottom padding so FAB never covers the last item
                   const SliverToBoxAdapter(
-                    child: SizedBox(height: 80),
+                    child: SizedBox(height: 100),
                   ),
                 ],
               ),
@@ -659,10 +804,16 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
           MaterialPageRoute(builder: (_) => const StudentFormScreen()),
         ),
         backgroundColor: AppColors.primary,
-        icon: const Icon(Icons.person_add, color: Colors.white),
+        elevation: 4,
+        icon: const Icon(Icons.person_add_rounded, color: Colors.white, size: 20),
         label: const Text(
           'Add Student',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w700,
+            fontSize: 13.5,
+            letterSpacing: 0.2,
+          ),
         ),
       ),
     );
@@ -698,12 +849,14 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
 class _ActionCard extends StatelessWidget {
   final IconData icon;
   final String label;
+  final String subtitle;
   final Color color;
   final VoidCallback onTap;
 
   const _ActionCard({
     required this.icon,
     required this.label,
+    required this.subtitle,
     required this.color,
     required this.onTap,
   });
@@ -718,39 +871,57 @@ class _ActionCard extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(16),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: color.withOpacity(0.15), width: 1.2),
+            border: Border.all(color: color.withOpacity(0.16), width: 1.2),
             boxShadow: [
               BoxShadow(
                 color: color.withOpacity(0.04),
-                blurRadius: 6,
+                blurRadius: 8,
                 offset: const Offset(0, 2),
               ),
             ],
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(9),
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.12),
-                  borderRadius: BorderRadius.circular(12),
+                  color: color.withOpacity(0.10),
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                child: Icon(icon, color: color, size: 22),
+                child: Icon(icon, color: color, size: 20),
               ),
-              const SizedBox(height: 7),
-              Text(
-                label,
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 11.5,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      label,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textPrimary,
+                        letterSpacing: -0.2,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      subtitle,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 10.5,
+                        color: AppColors.textSecondary,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -760,4 +931,5 @@ class _ActionCard extends StatelessWidget {
     );
   }
 }
+
 
