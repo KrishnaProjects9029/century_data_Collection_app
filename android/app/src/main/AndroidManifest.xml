@@ -17,7 +17,7 @@
         android:largeHeap="true">
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.krishnacentury.dataapp.MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:taskAffinity=""
