@@ -40,3 +40,8 @@ lib/firebase_options.dart
 
 # Test coverage
 coverage/
+
+# Local APK builds
+build-output/
+*.zip
+*.apk
