@@ -15,7 +15,7 @@ class AppTheme {
         error: AppColors.error,
       ),
       scaffoldBackgroundColor: AppColors.background,
-      fontFamily: 'Poppins',
+      
 
       // AppBar
       appBarTheme: const AppBarTheme(
@@ -24,7 +24,7 @@ class AppTheme {
         elevation: 0,
         centerTitle: true,
         titleTextStyle: TextStyle(
-          fontFamily: 'Poppins',
+          
           fontSize: 18,
           fontWeight: FontWeight.w600,
           color: Colors.white,
@@ -58,17 +58,17 @@ class AppTheme {
         ),
         labelStyle: const TextStyle(
           color: AppColors.textSecondary,
-          fontFamily: 'Poppins',
+          
           fontSize: 14,
         ),
         hintStyle: const TextStyle(
           color: AppColors.textHint,
-          fontFamily: 'Poppins',
+          
           fontSize: 14,
         ),
         errorStyle: const TextStyle(
           color: AppColors.error,
-          fontFamily: 'Poppins',
+          
           fontSize: 12,
         ),
       ),
@@ -84,7 +84,7 @@ class AppTheme {
             borderRadius: BorderRadius.circular(12),
           ),
           textStyle: const TextStyle(
-            fontFamily: 'Poppins',
+            
             fontSize: 16,
             fontWeight: FontWeight.w600,
             letterSpacing: 0.5,
@@ -97,7 +97,7 @@ class AppTheme {
         style: TextButton.styleFrom(
           foregroundColor: AppColors.primary,
           textStyle: const TextStyle(
-            fontFamily: 'Poppins',
+            
             fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
@@ -114,7 +114,7 @@ class AppTheme {
             borderRadius: BorderRadius.circular(12),
           ),
           textStyle: const TextStyle(
-            fontFamily: 'Poppins',
+            
             fontSize: 14,
             fontWeight: FontWeight.w600,
           ),
@@ -136,7 +136,7 @@ class AppTheme {
       chipTheme: ChipThemeData(
         backgroundColor: AppColors.background,
         selectedColor: AppColors.primaryLight,
-        labelStyle: const TextStyle(fontFamily: 'Poppins', fontSize: 12),
+        labelStyle: const TextStyle( fontSize: 12),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
 
@@ -146,7 +146,7 @@ class AppTheme {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         backgroundColor: AppColors.textPrimary,
         contentTextStyle: const TextStyle(
-          fontFamily: 'Poppins',
+          
           color: Colors.white,
           fontSize: 14,
         ),
@@ -161,52 +161,52 @@ class AppTheme {
       // Text
       textTheme: const TextTheme(
         headlineLarge: TextStyle(
-          fontFamily: 'Poppins',
+          
           fontSize: 28,
           fontWeight: FontWeight.w700,
           color: AppColors.textPrimary,
         ),
         headlineMedium: TextStyle(
-          fontFamily: 'Poppins',
+          
           fontSize: 22,
           fontWeight: FontWeight.w600,
           color: AppColors.textPrimary,
         ),
         headlineSmall: TextStyle(
-          fontFamily: 'Poppins',
+          
           fontSize: 18,
           fontWeight: FontWeight.w600,
           color: AppColors.textPrimary,
         ),
         titleLarge: TextStyle(
-          fontFamily: 'Poppins',
+          
           fontSize: 16,
           fontWeight: FontWeight.w600,
           color: AppColors.textPrimary,
         ),
         titleMedium: TextStyle(
-          fontFamily: 'Poppins',
+          
           fontSize: 14,
           fontWeight: FontWeight.w500,
           color: AppColors.textPrimary,
         ),
         bodyLarge: TextStyle(
-          fontFamily: 'Poppins',
+          
           fontSize: 16,
           color: AppColors.textPrimary,
         ),
         bodyMedium: TextStyle(
-          fontFamily: 'Poppins',
+          
           fontSize: 14,
           color: AppColors.textPrimary,
         ),
         bodySmall: TextStyle(
-          fontFamily: 'Poppins',
+          
           fontSize: 12,
           color: AppColors.textSecondary,
         ),
         labelLarge: TextStyle(
-          fontFamily: 'Poppins',
+          
           fontSize: 14,
           fontWeight: FontWeight.w600,
         ),
