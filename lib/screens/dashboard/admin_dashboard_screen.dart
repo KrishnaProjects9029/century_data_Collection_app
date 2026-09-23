@@ -107,60 +107,89 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                 slivers: [
                   // App Bar
                   SliverAppBar(
-                    expandedHeight: 120,
+                    expandedHeight: 125,
                     pinned: true,
-                    backgroundColor: AppColors.primary,
+                    backgroundColor: const Color(0xFF0F172A),
                     flexibleSpace: FlexibleSpaceBar(
                       background: Container(
                         decoration: const BoxDecoration(
                           gradient: LinearGradient(
-                            colors: [AppColors.primary, AppColors.primaryDark],
+                            colors: [Color(0xFF0F172A), Color(0xFF1E3A8A)],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ),
                         ),
-                        padding: const EdgeInsets.fromLTRB(20, 50, 20, 16),
+                        padding: const EdgeInsets.fromLTRB(20, 48, 20, 16),
                         child: userAsync.when(
-                          data: (user) => Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.end,
+                          data: (user) => Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    'Admin: ${user?.name ?? 'Administrator'}',
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 19,
-                                      fontWeight: FontWeight.w700,
-                                    ),
+                              CircleAvatar(
+                                radius: 22,
+                                backgroundColor: Colors.white.withOpacity(0.18),
+                                child: Text(
+                                  (user?.name.isNotEmpty == true ? user!.name[0] : 'A')
+                                      .toUpperCase(),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w800,
                                   ),
-                                  const SizedBox(width: 8),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8, vertical: 2),
-                                    decoration: BoxDecoration(
-                                      color: Colors.amber.shade700,
-                                      borderRadius: BorderRadius.circular(12),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            user?.name ?? 'Administrator',
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 2),
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFF59E0B).withOpacity(0.2),
+                                            borderRadius: BorderRadius.circular(12),
+                                            border: Border.all(
+                                                color: const Color(0xFFFBBF24),
+                                                width: 1),
+                                          ),
+                                          child: const Text(
+                                            'ADMIN',
+                                            style: TextStyle(
+                                              color: Color(0xFFFBBF24),
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w800,
+                                              letterSpacing: 0.8,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    child: const Text(
-                                      'ADMIN',
+                                    const SizedBox(height: 3),
+                                    const Text(
+                                      'Century Data App • Admin Portal',
                                       style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w800,
-                                        letterSpacing: 0.8,
+                                        color: Colors.white70,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 2),
-                              const Text(
-                                'Central Database • All Users Data & Excel Export',
-                                style: TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: 12,
+                                  ],
                                 ),
                               ),
                             ],
@@ -171,10 +200,18 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                       ),
                     ),
                     actions: [
-                      IconButton(
-                        icon: const Icon(Icons.logout, color: Colors.white),
-                        tooltip: 'Logout',
-                        onPressed: () => _logout(context, ref),
+                      Container(
+                        margin: const EdgeInsets.only(right: 12),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.12),
+                          shape: BoxShape.circle,
+                        ),
+                        child: IconButton(
+                          icon: const Icon(Icons.logout_rounded,
+                              color: Colors.white, size: 20),
+                          tooltip: 'Logout',
+                          onPressed: () => _logout(context, ref),
+                        ),
                       ),
                     ],
                   ),
@@ -184,18 +221,19 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                       child: Container(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 14),
                         decoration: BoxDecoration(
                           gradient: const LinearGradient(
-                            colors: [Color(0xFF2E7D32), Color(0xFF1B5E20)],
+                            colors: [Color(0xFF065F46), Color(0xFF047857)],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ),
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(18),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.green.withAlpha(50),
-                              blurRadius: 10,
+                              color: const Color(0xFF047857).withOpacity(0.25),
+                              blurRadius: 12,
                               offset: const Offset(0, 4),
                             ),
                           ],
@@ -203,13 +241,13 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                         child: Row(
                           children: [
                             Container(
-                              padding: const EdgeInsets.all(12),
+                              padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
-                                color: Colors.white.withAlpha(40),
-                                borderRadius: BorderRadius.circular(12),
+                                color: Colors.white.withOpacity(0.16),
+                                borderRadius: BorderRadius.circular(14),
                               ),
-                              child: const Icon(Icons.table_chart_rounded,
-                                  color: Colors.white, size: 28),
+                              child: const Icon(Icons.table_view_rounded,
+                                  color: Colors.white, size: 26),
                             ),
                             const SizedBox(width: 14),
                             Expanded(
@@ -226,42 +264,44 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                                   ),
                                   const SizedBox(height: 2),
                                   Text(
-                                    'Export student records submitted by all operators (${totalAsync.valueOrNull ?? 0} records)',
-                                    style: const TextStyle(
-                                      color: Colors.white70,
+                                    'Download 17-column dataset (${totalAsync.valueOrNull ?? 0} records)',
+                                    style: TextStyle(
+                                      color: Colors.white.withOpacity(0.85),
                                       fontSize: 12,
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                            const SizedBox(width: 8),
-                            ElevatedButton(
+                            const SizedBox(width: 10),
+                            ElevatedButton.icon(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.white,
-                                foregroundColor: const Color(0xFF1B5E20),
+                                foregroundColor: const Color(0xFF065F46),
+                                elevation: 0,
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 14, vertical: 10),
+                                    horizontal: 12, vertical: 8),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
                               onPressed: _isExporting ? null : _quickExportAll,
-                              child: _isExporting
+                              icon: _isExporting
                                   ? const SizedBox(
-                                      width: 16,
-                                      height: 16,
+                                      width: 14,
+                                      height: 14,
                                       child: CircularProgressIndicator(
                                         strokeWidth: 2,
-                                        color: Color(0xFF1B5E20),
+                                        color: Color(0xFF065F46),
                                       ),
                                     )
-                                  : const Text(
-                                      'EXPORT',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 13),
-                                    ),
+                                  : const Icon(Icons.file_download_rounded,
+                                      size: 16),
+                              label: const Text(
+                                'EXPORT',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w800, fontSize: 12),
+                              ),
                             ),
                           ],
                         ),
@@ -278,39 +318,46 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                         crossAxisCount: 2,
                         crossAxisSpacing: 12,
                         mainAxisSpacing: 12,
-                        childAspectRatio: 1.4,
+                        childAspectRatio: 1.15,
                       ),
                       delegate: SliverChildListDelegate([
                         StatsCard(
-                          title: 'Total Students (All Users)',
-                          value: totalAsync.valueOrNull?.toString() ?? '—',
-                          icon: Icons.groups_outlined,
+                          title: 'Total Students',
+                          value: totalAsync.valueOrNull?.toString() ?? '0',
+                          icon: Icons.groups_rounded,
                           color: AppColors.statBlue,
                           onTap: () => _goToList(context, false),
                         ),
                         StatsCard(
                           title: "Today's Entries",
-                          value: todayAsync.valueOrNull?.toString() ?? '—',
-                          icon: Icons.today_outlined,
+                          value: todayAsync.valueOrNull?.toString() ?? '0',
+                          icon: Icons.event_available_rounded,
                           color: AppColors.statGreen,
                         ),
                         StatsCard(
-                          title: 'My Submissions',
-                          value: myAsync.valueOrNull?.toString() ?? '—',
-                          icon: Icons.person_outlined,
-                          color: AppColors.statOrange,
-                          onTap: () => _goToList(context, true),
-                        ),
-                        StatsCard(
-                          title: 'Excel Export Options',
-                          value: 'Options →',
-                          icon: Icons.file_download_outlined,
+                          title: 'Active Operators',
+                          value: usersAsync.when(
+                            data: (users) => users
+                                .where((u) => u.isActive && !u.isAdmin)
+                                .length
+                                .toString(),
+                            loading: () => '...',
+                            error: (_, __) => '0',
+                          ),
+                          icon: Icons.badge_outlined,
                           color: AppColors.statPurple,
                           onTap: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => const ExportScreen()),
+                                builder: (_) => const UserManagementScreen()),
                           ),
+                        ),
+                        StatsCard(
+                          title: 'My Submissions',
+                          value: myAsync.valueOrNull?.toString() ?? '0',
+                          icon: Icons.person_pin_circle_outlined,
+                          color: AppColors.statOrange,
+                          onTap: () => _goToList(context, true),
                         ),
                       ]),
                     ),
@@ -318,16 +365,29 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
 
                   // Quick Action Tiles
                   SliverPadding(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                    padding: const EdgeInsets.fromLTRB(16, 18, 16, 0),
                     sliver: SliverList(
                       delegate: SliverChildListDelegate([
-                        const Text(
-                          'Quick Actions',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.textPrimary,
-                          ),
+                        Row(
+                          children: [
+                            Container(
+                              width: 4,
+                              height: 16,
+                              decoration: BoxDecoration(
+                                color: AppColors.primary,
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            const Text(
+                              'Quick Actions',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.textPrimary,
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 12),
                         GridView.count(
@@ -336,35 +396,34 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                           crossAxisCount: 3,
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 10,
-                          childAspectRatio: 0.95,
+                          childAspectRatio: 1.05,
                           children: [
                             _ActionCard(
-                              icon: Icons.person_add_outlined,
+                              icon: Icons.person_add_rounded,
                               label: 'Add Student',
                               color: AppColors.primary,
                               onTap: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) =>
-                                        const StudentFormScreen()),
+                                    builder: (_) => const StudentFormScreen()),
                               ),
                             ),
                             _ActionCard(
-                              icon: Icons.list_alt_outlined,
+                              icon: Icons.format_list_bulleted_rounded,
                               label: 'All Students',
                               color: AppColors.statBlue,
                               onTap: () => _goToList(context, false),
                             ),
                             _ActionCard(
-                              icon: Icons.search_outlined,
+                              icon: Icons.search_rounded,
                               label: 'Search',
                               color: AppColors.statGreen,
                               onTap: () =>
                                   _goToList(context, false, openSearch: true),
                             ),
                             _ActionCard(
-                              icon: Icons.filter_list_outlined,
-                              label: 'Filter',
+                              icon: Icons.filter_alt_rounded,
+                              label: 'Filter Data',
                               color: AppColors.statOrange,
                               onTap: () => Navigator.push(
                                 context,
@@ -373,8 +432,8 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                               ),
                             ),
                             _ActionCard(
-                              icon: Icons.file_download_outlined,
-                              label: 'Export Excel',
+                              icon: Icons.receipt_long_rounded,
+                              label: 'Excel Options',
                               color: AppColors.statPurple,
                               onTap: () => Navigator.push(
                                 context,
@@ -383,7 +442,7 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                               ),
                             ),
                             _ActionCard(
-                              icon: Icons.manage_accounts_outlined,
+                              icon: Icons.manage_accounts_rounded,
                               label: 'Manage Users',
                               color: AppColors.adminBadge,
                               onTap: () => Navigator.push(
@@ -407,19 +466,31 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              Container(
+                                width: 8,
+                                height: 8,
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFF10B981),
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                              const SizedBox(width: 8),
                               const Text(
-                                'Data Inserted from Users',
+                                'Live Submissions Feed',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
                                   color: AppColors.textPrimary,
                                 ),
                               ),
+                              const Spacer(),
                               TextButton(
                                 onPressed: () => _goToList(context, false),
-                                child: const Text('View All >'),
+                                child: const Text(
+                                  'View All →',
+                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                ),
                               ),
                             ],
                           ),
@@ -628,44 +699,54 @@ class _ActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(14),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withAlpha(12),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: color.withAlpha(25),
-                shape: BoxShape.circle,
+    return Material(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(16),
+      elevation: 0,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: color.withOpacity(0.15), width: 1.2),
+            boxShadow: [
+              BoxShadow(
+                color: color.withOpacity(0.04),
+                blurRadius: 6,
+                offset: const Offset(0, 2),
               ),
-              child: Icon(icon, color: color, size: 24),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.w500,
-                color: AppColors.textSecondary,
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(9),
+                decoration: BoxDecoration(
+                  color: color.withOpacity(0.12),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(icon, color: color, size: 22),
               ),
-            ),
-          ],
+              const SizedBox(height: 7),
+              Text(
+                label,
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 11.5,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
+

@@ -104,16 +104,32 @@ class StudentListTile extends StatelessWidget {
                     const SizedBox(height: 6),
                     Row(
                       children: [
-                        const Icon(Icons.person_outline,
-                            size: 12, color: AppColors.textHint),
-                        const SizedBox(width: 4),
-                        Text(
-                          student.makerName,
-                          style: const TextStyle(
-                              fontSize: 11, color: AppColors.textHint),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 6, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary.withOpacity(0.08),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(Icons.person_outline_rounded,
+                                  size: 12, color: AppColors.primary),
+                              const SizedBox(width: 3),
+                              Text(
+                                student.makerName,
+                                style: const TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.primary,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                         const Spacer(),
-                        const Icon(Icons.access_time_outlined,
+                        const Icon(Icons.access_time_rounded,
                             size: 12, color: AppColors.textHint),
                         const SizedBox(width: 4),
                         Text(

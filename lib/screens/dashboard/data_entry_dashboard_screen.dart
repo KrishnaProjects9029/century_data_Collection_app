@@ -29,36 +29,95 @@ class DataEntryDashboardScreen extends ConsumerWidget {
               child: CustomScrollView(
                 slivers: [
                   SliverAppBar(
-                    expandedHeight: 110,
+                    expandedHeight: 120,
                     pinned: true,
-                    backgroundColor: AppColors.primary,
+                    elevation: 0,
+                    backgroundColor: const Color(0xFF0F172A),
                     flexibleSpace: FlexibleSpaceBar(
                       background: Container(
                         decoration: const BoxDecoration(
                           gradient: LinearGradient(
-                            colors: [AppColors.primary, AppColors.primaryDark],
+                            colors: [Color(0xFF0F172A), Color(0xFF1E3A8A)],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ),
                         ),
-                        padding: const EdgeInsets.fromLTRB(20, 55, 20, 16),
+                        padding: const EdgeInsets.fromLTRB(20, 48, 20, 16),
                         child: userAsync.when(
-                          data: (user) => Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.end,
+                          data: (user) => Row(
                             children: [
-                              Text(
-                                'Hello, ${user?.name ?? ''}',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
+                              CircleAvatar(
+                                radius: 24,
+                                backgroundColor: Colors.white.withOpacity(0.15),
+                                child: Text(
+                                  (user?.name.isNotEmpty == true)
+                                      ? user!.name[0].toUpperCase()
+                                      : 'U',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                              const Text(
-                                'Data Entry Operator',
-                                style: TextStyle(
-                                    color: Colors.white70, fontSize: 12),
+                              const SizedBox(width: 14),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            user?.name ?? 'Operator',
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w700,
+                                              letterSpacing: 0.2,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 2),
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFF10B981)
+                                                .withOpacity(0.25),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            border: Border.all(
+                                              color: const Color(0xFF10B981)
+                                                  .withOpacity(0.5),
+                                              width: 1,
+                                            ),
+                                          ),
+                                          child: const Text(
+                                            'OPERATOR',
+                                            style: TextStyle(
+                                              color: Color(0xFF34D399),
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w700,
+                                              letterSpacing: 0.5,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 3),
+                                    const Text(
+                                      'Krishna Century Data Entry',
+                                      style: TextStyle(
+                                        color: Colors.white70,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -68,9 +127,20 @@ class DataEntryDashboardScreen extends ConsumerWidget {
                       ),
                     ),
                     actions: [
-                      IconButton(
-                        icon: const Icon(Icons.logout, color: Colors.white),
-                        onPressed: () => _logout(context, ref),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.12),
+                            shape: BoxShape.circle,
+                          ),
+                          child: IconButton(
+                            icon: const Icon(Icons.logout_rounded,
+                                color: Colors.white, size: 20),
+                            tooltip: 'Logout',
+                            onPressed: () => _logout(context, ref),
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -83,7 +153,7 @@ class DataEntryDashboardScreen extends ConsumerWidget {
                         crossAxisCount: 2,
                         crossAxisSpacing: 12,
                         mainAxisSpacing: 12,
-                        childAspectRatio: 1.4,
+                        childAspectRatio: 1.15,
                       ),
                       delegate: SliverChildListDelegate([
                         StatsCard(
@@ -112,32 +182,97 @@ class DataEntryDashboardScreen extends ConsumerWidget {
                     padding: const EdgeInsets.all(16),
                     sliver: SliverList(
                       delegate: SliverChildListDelegate([
-                        const SizedBox(height: 8),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 52,
-                          child: ElevatedButton.icon(
-                            icon: const Icon(Icons.person_add_outlined),
-                            label: const Text('Add New Student'),
-                            onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => const StudentFormScreen()),
+                        const SizedBox(height: 12),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            gradient: const LinearGradient(
+                              colors: [Color(0xFF1E3A8A), Color(0xFF2563EB)],
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0xFF2563EB).withOpacity(0.3),
+                                blurRadius: 10,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(16),
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => const StudentFormScreen()),
+                              ),
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 16),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.person_add_rounded,
+                                        color: Colors.white, size: 22),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      'Add New Student',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        letterSpacing: 0.3,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                        const SizedBox(height: 16),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 52,
-                          child: OutlinedButton.icon(
-                            icon: const Icon(Icons.list_alt_outlined),
-                            label: const Text('My Submitted Records'),
-                            onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) =>
-                                      const StudentListScreen(myOnly: true)),
+                        const SizedBox(height: 12),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                                color: AppColors.divider.withOpacity(0.8)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.03),
+                                blurRadius: 6,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(16),
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) =>
+                                        const StudentListScreen(myOnly: true)),
+                              ),
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 16),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.format_list_bulleted_rounded,
+                                        color: AppColors.textPrimary, size: 22),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      'My Submitted Records',
+                                      style: TextStyle(
+                                        color: AppColors.textPrimary,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                         ),
